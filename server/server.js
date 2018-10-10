@@ -1,8 +1,11 @@
+var bodyParser = require('body-parser');
 var express = require('express');
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/coolproject');
 
 var app = express();
+app.use(bodyParser.json());
+
 
 var Post = mongoose.model('Post', {
   title: String,
@@ -19,14 +22,6 @@ const myPost = new Post({
   content: 'Segodnya dnem',
   author: 'Amirzhan'
 });
-
-// myPost.save()
-//   .then(function(success) {
-//     console.log('success ', success);
-//   })
-//   .catch(function(error) {
-//     console.log('error ', error);
-//   });
 
 app.get('/', function(req, res) {
   res.send('Hello, world, Decoce');
@@ -56,6 +51,29 @@ app.get('/api/posts/:id', function(req, res) {
     console.log('error ', error);
     res.send(error);
   })
+});
+
+/* SAVE NEW POST */
+app.put('/api/posts', function(req, res) {
+  var title = req.body.title;
+  var author = req.body.author;
+  var content = req.body.content;
+
+  var postToSave = {
+    title: title,
+    author: author,
+    content: content
+  };
+
+  var newPost = new Post(postToSave);
+
+  newPost.save().then(function(success) {
+    console.log('saved');
+    res.send(success);
+  }).catch(function(error) {
+    res.send(error);
+  });
+
 });
 
 var port = 3000;
