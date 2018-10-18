@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html data-ng-app="app">
+<head>
+  <meta charset="UTF-8">
+  <title>Главная страница</title>
+</head>
+<body data-ng-controller="ctrl">
+  <h1>Hello, world</h1>
+
+  <!--{{school}}-->
+
+  <!--<input type="text" data-ng-model="user">-->
+  <!--{{user}}-->
+  <!--<button data-ng-click="clicked()">Click</button>-->
+
+  <ul>
+    <li data-ng-repeat="x in posts">
+      <p>{{x.title}}</p>
+      <p>{{x.author}}</p>
+      <p>{{x.content}}</p>
+      <p>{{x.date}}</p>
+      <hr>
+    </li>
+  </ul>
+
+  {{something}}
+  {{something2}}
+  <script type="text/javascript" src="vendor/js/angular.min.js"></script>
+  <script type="text/javascript">
+    var app = angular.module('app', []);
+
+    app.controller('ctrl', function($scope, $http) {
+      console.log('scope ', $scope);
+      var something = "dILLAN";
+      $scope.something2 = "Alan";
+      posts = [];
+      /* ДЕЛАЕМ GET запрос на БЭКЭНД по ссылке localhost:3000/api/posts */
+      $http.get('/api/posts').then(function(response) {
+        console.log('success ', response);
+        $scope.posts = response.data.posts;
+      }).catch(function(error) {
+        console.log('error ', error);
+      });
+//      $scope.school = "Descode";
+//
+//      $scope.clicked = function() {
+//        console.log('Clicked ' + $scope.user );
+//      }
+    });
+  </script>
+</body>
+</html>

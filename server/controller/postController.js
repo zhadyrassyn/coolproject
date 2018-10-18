@@ -6,7 +6,7 @@ var Post = require('./../db/model/post');
 router.get('/api/posts', function(req, res) {
   Post.find().then(function(posts) {
     res.send({
-      posts
+      posts: posts
     });
   }).catch(function(error) {
     console.log('error ', error);
