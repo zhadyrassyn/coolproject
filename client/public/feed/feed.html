@@ -5,27 +5,53 @@
     <p>{{x.author}}</p>
     <p>{{x.content}}</p>
     <p>{{x.date}}</p>
+    <button type="button" data-ng-click="deletePost(x._id)">Удалить</button>
+    <button type="button" data-ng-click="showEditModalEvent(x)">Редактировать</button>
+    <button type="button">Подробнее...</button>
     <hr>
   </li>
 </ul>
 
-<!-- The Modal -->
+<!-- ADD MODAL -->
 <div id="myModal" class="modal" data-ng-if="showAddModal">
 
   <!-- Modal content -->
   <div class="modal-content">
     <div class="modal-header">
-      <span class="close">&times;</span>
+      <span class="close" data-ng-click="closeAddModalEvent()">&times;</span>
       <h2>Modal Header</h2>
     </div>
     <div class="modal-body">
-      <!--TITLE INPUT-->
-      <!--AUTHOR INPUT-->
-      <!--CONTENT TEXTAREA-->
+      <input type="text" placeholder="Введите название" data-ng-model="title">
+      <input type="text" placeholder="Введите автора" data-ng-model="author">
+      <textarea placeholder="Введите контент" data-ng-model="content"></textarea>
     </div>
     <div class="modal-footer">
-      <!--BUTTON SAVE-->
-      <!--BUTTON CLOSE-->
+      <button type="button" data-ng-click="addNewPost(title, author, content)">Добавить</button>
+      <button type="button" data-ng-click="closeAddModalEvent()">Отмена</button>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- EDIT MODAL -->
+<div class="modal" data-ng-if="showEditModal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-header">
+      <span class="close" data-ng-click="closeAddModalEvent()">&times;</span>
+      <h2>Редактировать пост {{selectedPost.title}}</h2>
+    </div>
+    <div class="modal-body">
+      <input type="text" placeholder="Введите название" data-ng-model="selectedPost.title">
+      <input type="text" placeholder="Введите автора" data-ng-model="selectedPost.author">
+      <textarea placeholder="Введите контент" data-ng-model="selectedPost.content"></textarea>
+    </div>
+    <div class="modal-footer">
+      <button type="button">Добавить</button>
+      <button type="button">Отмена</button>
     </div>
   </div>
 
