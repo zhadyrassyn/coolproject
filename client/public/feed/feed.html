@@ -41,8 +41,8 @@
   <!-- Modal content -->
   <div class="modal-content">
     <div class="modal-header">
-      <span class="close" data-ng-click="closeAddModalEvent()">&times;</span>
-      <h2>Редактировать пост {{selectedPost.title}}</h2>
+      <span class="close" data-ng-click="closeEditModalEvent()">&times;</span>
+      <h2>Редактировать пост {{selectedPostTitle}}</h2>
     </div>
     <div class="modal-body">
       <input type="text" placeholder="Введите название" data-ng-model="selectedPost.title">
@@ -50,8 +50,10 @@
       <textarea placeholder="Введите контент" data-ng-model="selectedPost.content"></textarea>
     </div>
     <div class="modal-footer">
-      <button type="button">Добавить</button>
-      <button type="button">Отмена</button>
+      <button type="button" data-ng-click="editPost(selectedPost._id, selectedPost.title, selectedPost.author, selectedPost.content)">
+        Добавить
+      </button>
+      <button type="button" data-ng-click="closeEditModalEvent()">Отмена</button>
     </div>
   </div>
 

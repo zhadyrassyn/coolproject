@@ -7,12 +7,44 @@ angular
 
       $scope.showAddModal = false;
       $scope.showEditModal = false;
-      $scope.selectedPost;
+      $scope.selectedPost = {};
+      $scope.selectedPostTitle = "";
 
       $scope.showEditModalEvent = function(post) {
-        $scope.selectedPost = post;
+        $scope.selectedPost._id = post._id;
+        $scope.selectedPost.title = post.title;
+        $scope.selectedPost.author = post.author;
+        $scope.selectedPost.content = post.content;
         $scope.showEditModal = true;
+
+        $scope.selectedPostTitle = post.title;
       };
+
+      $scope.closeEditModalEvent = function() {
+        $scope.showEditModal = false;
+      };
+
+      $scope.editPost = function(id, title, author, content) {
+        var data = {
+          title: title,
+          author: author,
+          content: content
+        };
+
+        var url = '/api/posts/' + id;
+        $http.post(url, data)
+          .then((response) => {
+            var updatedPost = response.data.post;
+            var index = $scope.posts.findIndex(it => id === it._id);
+            if (index >= 0) {
+              $scope.posts.splice(index, 1, updatedPost);
+              $scope.closeEditModalEvent();
+            }
+          })
+          .catch((error) => {
+            console.log('error ', error);
+          });
+      }
 
       $scope.posts = [];
       $http.get('/api/posts')

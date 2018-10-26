@@ -79,7 +79,7 @@ router.post('/api/posts/:id', function(req, res) {
     content: content
   }}, {new: true})
     .then(function(updatedPost) {
-      console.log('success ', success);
+      // console.log('success ', success);
       res.send({post: updatedPost});
     })
     .catch(function(error) {
