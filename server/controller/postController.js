@@ -71,7 +71,7 @@ router.post('/api/posts/:id', function(req, res) {
 
   var title = req.body.title;
   var author = req.body.author;
-  var content = req.body.title;
+  var content = req.body.content;
 
   Post.findByIdAndUpdate(id, {$set: {
     title: title,
