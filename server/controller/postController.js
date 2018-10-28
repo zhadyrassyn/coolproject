@@ -1,6 +1,13 @@
 var app = require('express');
+var multer = require('multer');
+var base64Img = require('base64-img');
 var router = app.Router();
 var Post = require('./../db/model/post');
+
+var path = require('path');
+var uploadDir = path.join(__dirname, "../uploads");
+
+var upload = multer({ dest: uploadDir});
 
 /* GET ALL POSTS */
 router.get('/api/posts', function(req, res) {
@@ -30,7 +37,7 @@ router.get('/api/posts/:id', function(req, res) {
 
 
 /* SAVE NEW POST */
-router.put('/api/posts', function(req, res) {
+router.put('/api/posts', upload.single('file'), function(req, res) {
   var title = req.body.title;
   var author = req.body.author;
   var content = req.body.content;
@@ -41,15 +48,30 @@ router.put('/api/posts', function(req, res) {
     content: content
   };
 
-  var newPost = new Post(postToSave);
+  var filePath = "";
 
-  newPost.save().then(function(success) {
-    console.log('saved');
-    res.send(success);
-  }).catch(function(error) {
-    res.send(error);
+  try {
+    filePath = req.file.path;
+  } catch (e) {
+    console.log('error ', e);
+  }
+
+  base64Img.base64(filePath, function(err, data) {
+    if (err) {
+      console.log('error ', err);
+    } else {
+      postToSave.image = data;
+    }
+
+    var newPost = new Post(postToSave);
+
+    newPost.save().then(function(success) {
+      console.log('saved');
+      res.send(success);
+    }).catch(function(error) {
+      res.send(error);
+    });
   });
-
 });
 
 

@@ -5,6 +5,7 @@
     <p>{{x.author}}</p>
     <p>{{x.content}}</p>
     <p>{{x.date}}</p>
+    <img data-ng-src="{{x.image}}" alt="Картинка поста" data-ng-if="x.image">
     <button type="button" data-ng-click="deletePost(x._id)">Удалить</button>
     <button type="button" data-ng-click="showEditModalEvent(x)">Редактировать</button>
     <button type="button">Подробнее...</button>
@@ -25,9 +26,10 @@
       <input type="text" placeholder="Введите название" data-ng-model="title">
       <input type="text" placeholder="Введите автора" data-ng-model="author">
       <textarea placeholder="Введите контент" data-ng-model="content"></textarea>
+      <input type="file" ng-file-model="image">
     </div>
     <div class="modal-footer">
-      <button type="button" data-ng-click="addNewPost(title, author, content)">Добавить</button>
+      <button type="button" data-ng-click="addNewPost(title, author, content, image)">Добавить</button>
       <button type="button" data-ng-click="closeAddModalEvent()">Отмена</button>
     </div>
   </div>

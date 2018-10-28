@@ -7,7 +7,8 @@ var Post = mongoose.model('Post', {
   date: {
     type: Date,
     default: new Date()
-  }
+  },
+  image: String,
 });
 
 module.exports = Post;

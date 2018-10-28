@@ -11,7 +11,11 @@ angular.module('feedModule').factory('feedService', ($http) => {
     },
 
     cretePost: function(data) {
-      return $http.put(this.url, data);
+      return $http.put(this.url, data, {
+        headers: {
+          "content-type": undefined
+        }
+      });
     },
 
     deletePost: function(id) {

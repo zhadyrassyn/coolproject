@@ -61,12 +61,12 @@ angular
         $scope.showAddModal = false;
       };
 
-      $scope.addNewPost = function(title, author, content) {
-        var data = {
-          title: title,
-          author: author,
-          content: content
-        };
+      $scope.addNewPost = function(title, author, content, image) {
+        var data = new FormData();
+        data.append("title", title);
+        data.append("author", author);
+        data.append("content", content);
+        data.append("file", image);
 
         /* Отправляем запрос на postController.js на PUT /api/posts */
         feedService.cretePost(data)
