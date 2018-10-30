@@ -4,27 +4,11 @@
   <meta charset="UTF-8">
   <title>Главная страница</title>
   <link rel="stylesheet" type="text/css" href="css/index.css">
+
+  <base href="/">
 </head>
 <body>
-  <feed-component></feed-component>
-
-  <!--<h1>Hello, world</h1>-->
-
-  <!--&lt;!&ndash;{{school}}&ndash;&gt;-->
-
-  <!--&lt;!&ndash;<input type="text" data-ng-model="user">&ndash;&gt;-->
-  <!--&lt;!&ndash;{{user}}&ndash;&gt;-->
-  <!--&lt;!&ndash;<button data-ng-click="clicked()">Click</button>&ndash;&gt;-->
-
-  <!--<ul>-->
-    <!--<li data-ng-repeat="x in posts">-->
-      <!--<p>{{x.title}}</p>-->
-      <!--<p>{{x.author}}</p>-->
-      <!--<p>{{x.content}}</p>-->
-      <!--<p>{{x.date}}</p>-->
-      <!--<hr>-->
-    <!--</li>-->
-  <!--</ul>-->
+  <ui-view></ui-view>
 
   <script type="text/javascript" src="vendor/js/angular.min.js"></script>
   <script type="text/javascript" src="vendor/js/angular-ui-router.js"></script>
@@ -35,21 +19,5 @@
   <script type="text/javascript" src="vendor/js/ng-file-model.js"></script>
   <script type="text/javascript" src="post-detail/post-detail.module.js"></script>
   <script type="text/javascript" src="post-detail/post-detail.component.js"></script>
-  <!--<script type="text/javascript">-->
-    <!--app.controller('ctrl', function($scope, $http) {-->
-      <!--posts = [];-->
-      <!--/* ДЕЛАЕМ GET запрос на БЭКЭНД по ссылке localhost:3000/api/posts */-->
-      <!--$http.get('/api/posts').then(function(response) {-->
-        <!--$scope.posts = response.data.posts;-->
-      <!--}).catch(function(error) {-->
-        <!--console.log('error ', error);-->
-      <!--});-->
-<!--//      $scope.school = "Descode";-->
-<!--//-->
-<!--//      $scope.clicked = function() {-->
-<!--//        console.log('Clicked ' + $scope.user );-->
-<!--//      }-->
-    <!--});-->
-  <!--</script>-->
 </body>
 </html>

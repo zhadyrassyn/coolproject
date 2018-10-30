@@ -8,7 +8,7 @@
     <img data-ng-src="{{x.image}}" alt="Картинка поста" data-ng-if="x.image">
     <button type="button" data-ng-click="deletePost(x._id)">Удалить</button>
     <button type="button" data-ng-click="showEditModalEvent(x)">Редактировать</button>
-    <button type="button">Подробнее...</button>
+    <button type="button" ui-sref="postDetail({postID: x._id})">Подробнее...</button>
     <hr>
   </li>
 </ul>
