@@ -1,1 +1,1 @@
-var app = angular.module('app', ['feedModule']);
+var app = angular.module('app', ['feedModule', 'postDetailModule']);
