@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ui.router', 'feedModule', 'postDetailModule']);
+var app = angular.module('app', ['ui.router', 'feedModule', 'postDetailModule', 'navigationModule']);
 
 app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
   $locationProvider.html5Mode(true);

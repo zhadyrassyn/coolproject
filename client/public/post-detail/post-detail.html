@@ -1,2 +1,6 @@
-Post detail
-{{school}}
+<p>{{post.title}}</p>
+<p>{{post.author}}</p>
+<p>{{post.content}}</p>
+<p>{{post.date}}</p>
+<img data-ng-src="{{post.image}}" alt="Картинка поста"
+     data-ng-if="post.image">
