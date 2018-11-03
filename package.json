@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "base64-img": "^1.0.4",
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "mongoose": "^5.3.1",

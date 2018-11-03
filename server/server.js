@@ -5,12 +5,14 @@ var path = require('path');
 var mongooseConnection = require('./db/mongoose.connect').mongooseConnection;
 var app = express();
 var postRouter = require('./controller/postController');
+var authController = require('./controller/authController');
 
 /* Указываем папку статических файлов */
 app.use(express.static(path.join(__dirname, "../client/public")));
 app.use(bodyParser.json());
 
 app.use('/', postRouter);
+app.use('/', authController);
 
 /*Отображаем index.html файл при запросе GET /* */
 app.get('*', function(req, res) {
