@@ -52,6 +52,7 @@ router
             if (error || isEqual === false) {
               res.sendStatus(401);
             } else {
+              req.session.authorized = true;
               res.sendStatus(200);
             }
           })
@@ -60,6 +61,13 @@ router
       .catch(function(error) {
         res.send({ error: error }).status(400);
       })
+  })
+  .get('/secret', function(req, res) {
+    if (req.session.authorized) {
+      res.send("Data is available");
+    } else {
+      res.send("Da is not available");
+    }
   });
 
 module.exports = router;

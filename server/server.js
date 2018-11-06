@@ -1,6 +1,7 @@
 var bodyParser = require('body-parser');
 var express = require('express');
 var path = require('path');
+var session = require('express-session');
 /* path = Блиблиотека, помогающая работать с путями */
 var mongooseConnection = require('./db/mongoose.connect').mongooseConnection;
 var app = express();
@@ -10,6 +11,13 @@ var authController = require('./controller/authController');
 /* Указываем папку статических файлов */
 app.use(express.static(path.join(__dirname, "../client/public")));
 app.use(bodyParser.json());
+
+app.use(session({
+  secret: 'some key',
+  resave: true,
+  saveUninitialized: true,
+  unset: 'destroy'
+}));
 
 app.use('/', postRouter);
 app.use('/', authController);
