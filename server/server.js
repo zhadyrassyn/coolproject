@@ -2,6 +2,7 @@ var bodyParser = require('body-parser');
 var express = require('express');
 var path = require('path');
 var session = require('express-session');
+var MongoStore = require('connect-mongo')(session);
 /* path = Блиблиотека, помогающая работать с путями */
 var mongooseConnection = require('./db/mongoose.connect').mongooseConnection;
 var app = express();
@@ -16,7 +17,8 @@ app.use(session({
   secret: 'some key',
   resave: true,
   saveUninitialized: true,
-  unset: 'destroy'
+  unset: 'destroy',
+  store: new MongoStore({ mongooseConnection: mongooseConnection.connection })
 }));
 
 app.use('/', postRouter);

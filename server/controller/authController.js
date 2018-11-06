@@ -52,7 +52,6 @@ router
             if (error || isEqual === false) {
               res.sendStatus(401);
             } else {
-              req.session.authorized = true;
               res.sendStatus(200);
             }
           })
