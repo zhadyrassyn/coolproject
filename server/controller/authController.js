@@ -1,6 +1,8 @@
 var router = require('express').Router();
 var User = require('./../db/model/user');
 
+var passport = require('./../service/auth');
+
 router
   .post('/api/auth/sign-up', function(req, res) {
     var firstName = req.body.firstName;
@@ -34,32 +36,8 @@ router
         res.send({ error: error }).status(400);
       });
   })
-  .post('/api/auth/sign-in', function(req, res) {
-    var email = req.body.email;
-    var password = req.body.password;
-
-    if (!email || !password) {
-      res.sendStatus(400);
-    }
-
-    User.findOne({email: email})
-      .then(function(user) {
-
-        if (!user) {
-          res.sendStatus(401);
-        } else {
-          user.comparePassword(password, function(error, isEqual) {
-            if (error || isEqual === false) {
-              res.sendStatus(401);
-            } else {
-              res.sendStatus(200);
-            }
-          })
-        }
-      })
-      .catch(function(error) {
-        res.send({ error: error }).status(400);
-      })
+  .post('/api/auth/sign-in', passport.authenticate('local'), function(req, res) {
+    res.sendStatus(200);
   })
   .get('/secret', function(req, res) {
     if (req.session.authorized) {

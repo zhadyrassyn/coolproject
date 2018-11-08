@@ -8,6 +8,7 @@ var mongooseConnection = require('./db/mongoose.connect').mongooseConnection;
 var app = express();
 var postRouter = require('./controller/postController');
 var authController = require('./controller/authController');
+var passport = require('./service/auth');
 
 /* Указываем папку статических файлов */
 app.use(express.static(path.join(__dirname, "../client/public")));
@@ -20,6 +21,9 @@ app.use(session({
   unset: 'destroy',
   store: new MongoStore({ mongooseConnection: mongooseConnection.connection })
 }));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', postRouter);
 app.use('/', authController);
