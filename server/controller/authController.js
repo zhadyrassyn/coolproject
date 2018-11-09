@@ -30,7 +30,17 @@ router
 
     user.save()
       .then(function(user) {
-        res.status(200).send({ user: user });
+        console.log('user ', user);
+        if (user) {
+          req.login(user, function(err) {
+            if (err) {
+              console.log('err ', err);
+            } else {
+              res.status(201).send({ user: user });
+            }
+          });
+        }
+
       })
       .catch(function(error) {
         res.status(400).send({ error: error })
