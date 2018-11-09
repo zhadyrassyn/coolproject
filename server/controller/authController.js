@@ -30,21 +30,19 @@ router
 
     user.save()
       .then(function(user) {
-        res.send({ user: user }).status(201);
+        res.status(200).send({ user: user });
       })
       .catch(function(error) {
-        res.send({ error: error }).status(400);
+        res.status(400).send({ error: error })
       });
   })
   .post('/api/auth/sign-in', passport.authenticate('local'), function(req, res) {
     res.sendStatus(200);
   })
   .get('/secret', function(req, res) {
-    if (req.session.authorized) {
-      res.send("Data is available");
-    } else {
-      res.send("Da is not available");
-    }
+    console.log('user is: ', req.user);
+    req.session.destroy();
+    res.sendStatus(200);
   });
 
 module.exports = router;

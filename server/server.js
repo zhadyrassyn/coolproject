@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 
 app.use(session({
   secret: 'some key',
-  resave: true,
+  resave: false,
   saveUninitialized: true,
   unset: 'destroy',
   store: new MongoStore({ mongooseConnection: mongooseConnection.connection })
