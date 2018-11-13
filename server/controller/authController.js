@@ -47,6 +47,14 @@ router
       });
   })
   .post('/api/auth/sign-in', passport.authenticate('local'), function(req, res) {
+    console.log('sign in');
+    res.sendStatus(200);
+  })
+  .post('/api/auth/sign-out', function(req, res) {
+    req.session.destroy();
+    req.logout();
+    res.clearCookie("connect.sid");
+
     res.sendStatus(200);
   })
   .get('/secret', function(req, res) {

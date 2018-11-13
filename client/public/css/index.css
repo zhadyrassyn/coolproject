@@ -100,3 +100,18 @@ nav ul li {
   margin-left: 10px;
   border-right: 1px solid black;
 }
+
+#login-form {
+  margin: 20px;
+}
+
+#login-form input {
+  display: block;
+  padding: 10px;
+  font-size: 24px;
+}
+
+#login-form button {
+  padding: 10px 15px;
+  font-size: 24px;
+}
