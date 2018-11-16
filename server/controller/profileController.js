@@ -9,8 +9,10 @@ var uploadDir = path.join(__dirname, "../uploads");
 var upload = multer({ dest: uploadDir});
 
 /* GET ALL POSTS */
-router.get('/api/posts', function(req, res) {
-  Post.find().then(function(posts) {
+router.get('/api/profile/:id/posts', function(req, res) {
+  var id = req.params.id;
+
+  Post.find({author: id}).then(function(posts) {
     res.send({
       posts: posts
     });
@@ -21,14 +23,14 @@ router.get('/api/posts', function(req, res) {
 });
 
 /* SAVE NEW POST */
-router.put('/api/posts', upload.single('file'), function(req, res) {
+router.put('/api/profile/:id/posts', upload.single('file'), function(req, res) {
+  var id = req.params.id;
   var title = req.body.title;
-  var author = req.body.author;
   var content = req.body.content;
 
   var postToSave = {
     title: title,
-    author: author,
+    author: id,
     content: content
   };
 
