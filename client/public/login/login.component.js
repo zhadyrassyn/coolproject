@@ -1,7 +1,7 @@
 angular
   .module('loginModule')
   .component('loginComponent', {
-    controller: function($scope, $http) {
+    controller: function($scope, $http, $state, $rootScope) {
       $scope.login = function(email, password) {
         var data = {
           email: email,
@@ -10,9 +10,9 @@ angular
 
         $http.post('/api/auth/sign-in', data)
           .then(function(response) {
-            console.log('response ', response);
             if (response.status === 200) {
-              console.log('Success. Cookie created');
+              $rootScope.authenticated = true;
+              $state.go('index');
             }
           })
           .catch(function(error) {

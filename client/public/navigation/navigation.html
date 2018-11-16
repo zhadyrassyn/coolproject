@@ -4,10 +4,10 @@
     <li ui-sref="index">
       Главная страница
     </li>
-    <li ui-sref="login">
+    <li ui-sref="login" data-ng-if="!$root.authenticated">
       Войти
     </li>
-    <li>
+    <li data-ng-if="!$root.authenticated">
       Зарегестироваться
     </li>
     <li>
@@ -15,6 +15,9 @@
     </li>
     <li>
       Контакты
+    </li>
+    <li data-ng-if="$root.authenticated" data-ng-click="logout()">
+      Выйти
     </li>
   </ul>
 </nav>

@@ -1,4 +1,4 @@
-var app = angular.module('app', ['ui.router', 'feedModule',
+var app = angular.module('app', ['ngCookies', 'ui.router', 'feedModule',
   'postDetailModule', 'navigationModule', 'loginModule']);
 
 app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
