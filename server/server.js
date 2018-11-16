@@ -8,7 +8,9 @@ var mongooseConnection = require('./db/mongoose.connect').mongooseConnection;
 var app = express();
 var postRouter = require('./controller/postController');
 var authController = require('./controller/authController');
+var profileController = require('./controller/profileController');
 var passport = require('./service/auth');
+
 
 /* Указываем папку статических файлов */
 app.use(express.static(path.join(__dirname, "../client/public")));
@@ -27,7 +29,7 @@ app.use(passport.session());
 
 app.use('/', postRouter);
 app.use('/', authController);
-
+app.use('/', profileController);
 /*Отображаем index.html файл при запросе GET /* */
 app.get('*', function(req, res) {
   res.sendFile(path.join(__dirname, "../client/public/index.html"));
