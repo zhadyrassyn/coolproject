@@ -11,7 +11,7 @@ var upload = multer({ dest: uploadDir});
 
 /* GET ALL POSTS */
 router.get('/api/posts', function(req, res) {
-  Post.find().then(function(posts) {
+  Post.find().populate('author', ['firstName', 'lastName']).then(function(posts) {
     res.send({
       posts: posts
     });

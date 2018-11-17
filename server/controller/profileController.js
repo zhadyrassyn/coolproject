@@ -11,7 +11,7 @@ var upload = multer({ dest: uploadDir});
 /* GET ALL POSTS */
 router.get('/api/profile/:id/posts', function(req, res) {
   var id = req.params.id;
-
+  //.populate('author', 'firstName')
   Post.find({author: id}).then(function(posts) {
     res.send({
       posts: posts
@@ -61,10 +61,11 @@ router.put('/api/profile/:id/posts', upload.single('file'), function(req, res) {
 });
 
 //DELETE
-router.delete('/api/posts/:id', function(req, res) {
-  var id = req.params.id;
+router.delete('/api/profile/:userId/posts/:postId', function(req, res) {
+  // var userId = req.params.userId;
+  var postId = req.params.postId;
 
-  Post.findByIdAndRemove(id)
+  Post.findByIdAndRemove(postId)
     .then(function(deletedPost) {
       res.send({post: deletedPost});
     })
@@ -73,16 +74,16 @@ router.delete('/api/posts/:id', function(req, res) {
     });
 });
 
-router.post('/api/posts/:id', function(req, res) {
-  var id = req.params.id;
+//UPDATE POST
+router.post('/api/profile/:userId/posts/:postId', function(req, res) {
+  // var userId = req.params.userId;
+  var postId = req.params.postId;
 
   var title = req.body.title;
-  var author = req.body.author;
   var content = req.body.content;
 
-  Post.findByIdAndUpdate(id, {$set: {
+  Post.findByIdAndUpdate(postId, {$set: {
     title: title,
-    author: author,
     content: content
   }}, {new: true})
     .then(function(updatedPost) {
@@ -91,7 +92,7 @@ router.post('/api/posts/:id', function(req, res) {
     })
     .catch(function(error) {
       console.log('error ', error);
-      res.send(error).status(400);
+      res.status(400).send(error);
     });
 });
 
