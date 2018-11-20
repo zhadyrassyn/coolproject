@@ -3,7 +3,9 @@ angular.module('profileModule').factory('profileService', ($http) => {
     url: '/api/profile',
 
     getPosts: function(userId) {
-      return $http.get(`${this.url}/${userId}/posts`);
+      // return $http.get(`${this.url}/${userId}/posts`);
+      var url = this.url  + '/' + userId + '/posts';
+      var url1 = `${this.url}/${userId}/posts`;
     },
 
     updatePost: function(userId, postId, data) {

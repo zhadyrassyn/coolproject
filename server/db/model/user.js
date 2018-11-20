@@ -24,6 +24,7 @@ var userSchema = new Schema({
     type: String,
     required: true,
   },
+  avatarPath: String
 });
 
 userSchema.pre('save', function(next) {

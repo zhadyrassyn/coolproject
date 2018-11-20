@@ -4,8 +4,9 @@ var base64Img = require('base64-img');
 var Post = require('./../db/model/post');
 
 var path = require('path');
+var fs = require('fs');
 var uploadDir = path.join(__dirname, "../uploads");
-
+var User = require('../db/model/user');
 
 var upload = multer({ dest: uploadDir});
 
@@ -97,5 +98,35 @@ router.post('/api/profile/:userId/posts/:postId', function(req, res) {
       res.status(400).send(error);
     });
 });
+
+var uploadDirAvatars = path.join(__dirname, '../uploads/avas');
+var uploadAvatars = multer({ dest: uploadDirAvatars});
+
+/* SAVE PROFILE PHOTO */
+router.post('/api/profile/:userId/avatar', uploadAvatars.single('img'),
+  function(req, res) {
+    var userId = req.params.userId;
+    var filePath = req.file.path;
+    var targetFile = userId + '.' + req.file.originalname.split('.').pop();
+
+    var targetPath = path.join(uploadDirAvatars, targetFile);
+    fs.rename(filePath, targetPath, function(err) {
+      if (err) {
+        return res.status(500).send({err: err});
+      }
+
+      User.findByIdAndUpdate(userId, {$set: {
+        avatarPath: '/avas/' + targetFile
+      }}, {new: true})
+        .then(function(updatedUser) {
+          res.send(updatedUser);
+        })
+        .catch(function(error) {
+          console.log('error ', error);
+          res.status(400).send(error);
+        });
+    });
+
+  });
 
 module.exports = router;
