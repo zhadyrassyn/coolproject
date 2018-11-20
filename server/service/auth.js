@@ -25,12 +25,10 @@ passport.use(new LocalStrategy({ usernameField: 'email'},
 ));
 
 passport.serializeUser(function(user, done) {
-  console.log('serializing user');
   done(null, user._id);
 });
 
 passport.deserializeUser(function(id, done) {
-  console.log('deserializing user');
   User.findById(id, function(err, user) {
 
     if (err) {

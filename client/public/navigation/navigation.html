@@ -1,23 +1,20 @@
 <nav>
-  <a ui-sref="index">Logotip</a>
-  <ul>
-    <li ui-sref="index">
-      Главная страница
+  <a ui-sref="index" class="logo-link"><img src="/resources/img/blog-icon.png" id="logo"></a>
+  <ul class="nav">
+    <li class="nav-item" ui-sref="index" ui-sref-active="active">
+      <a class="nav-link" href="#">Главная страница</a>
     </li>
-    <li ui-sref="login" data-ng-if="!$root.authenticated">
-      Войти
+    <li class="nav-item" ui-sref="login" data-ng-if="!$root.authenticated" ui-sref-active="active">
+      <a class="nav-link" href="#">Войти</a>
     </li>
-    <li data-ng-if="!$root.authenticated">
-      Зарегестироваться
+    <li class="nav-item" data-ng-if="!$root.authenticated" ui-sref-active="active">
+      <a class="nav-link" href="#">Зарегестироваться</a>
     </li>
-    <li>
-      О нас
+    <li class="nav-item" ui-sref="profile" data-ng-if="$root.authenticated" ui-sref-active="active">
+      <a class="nav-link" href="#">Профиль</a>
     </li>
-    <li>
-      Контакты
-    </li>
-    <li data-ng-if="$root.authenticated" data-ng-click="logout()">
-      Выйти
+    <li class="nav-item" data-ng-if="$root.authenticated" data-ng-click="logout()" ui-sref-active="active">
+      <a class="nav-link" href="#">Выйти</a>
     </li>
   </ul>
 </nav>

@@ -13,7 +13,8 @@ var passport = require('./service/auth');
 
 
 /* Указываем папку статических файлов */
-app.use(express.static(path.join(__dirname, "../client/public")));
+app.use(express.static(path.join(__dirname, "../client/public")))
+
 app.use(bodyParser.json());
 
 app.use(session({

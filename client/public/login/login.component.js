@@ -12,7 +12,7 @@ angular
           .then(function(response) {
             if (response.status === 200) {
               $rootScope.authenticated = true;
-              $state.go('index');
+              $state.go('profile');
             }
           })
           .catch(function(error) {

@@ -1,7 +1,7 @@
 body {font-family: Arial, Helvetica, sans-serif;}
 
 /* The Modal (background) */
-.modal {
+.my-modal {
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
   padding-top: 100px; /* Location of the box */
@@ -15,7 +15,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 }
 
 /* Modal Content */
-.modal-content {
+.my-modal-content {
   position: relative;
   background-color: #fefefe;
   margin: auto;
@@ -55,50 +55,28 @@ body {font-family: Arial, Helvetica, sans-serif;}
   cursor: pointer;
 }
 
-.modal-header {
+.my-modal-header {
   padding: 2px 16px;
   background-color: #5cb85c;
   color: white;
 }
 
-.modal-body {padding: 2px 16px;}
+.my-modal-body {padding: 2px 16px;}
 
-.modal-footer {
+.my-modal-footer {
   padding: 2px 16px;
   background-color: #5cb85c;
   color: white;
 }
 
-.modal-body > input[type="text"],
-.modal-body > textarea {
+.my-modal-body > input[type="text"],
+.my-modal-body > textarea {
   display: block;
   margin: 10px 5px;
 }
 
-.modal-footer {
+.my-modal-footer {
   padding: 10px 20px;
-}
-
-nav {
-  display: flex;
-  border: 1px solid black;
-}
-
-nav > a {
-  margin-right: 20px;
-}
-
-nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-}
-
-nav ul li {
-  margin-right: 10px;
-  margin-left: 10px;
-  border-right: 1px solid black;
 }
 
 #login-form {
@@ -114,4 +92,70 @@ nav ul li {
 #login-form button {
   padding: 10px 15px;
   font-size: 24px;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  border-bottom: 2px solid #f2f3f4;
+  padding-bottom: 20px;
+}
+
+#logo {
+  width: 40px;
+  height:auto;
+}
+
+#profileAddBtn {
+  position: fixed;
+  right: 100px;
+  bottom: 100px;
+  z-index: 500;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  font-size: 25px;
+}
+
+.logo-link {
+  margin-right: 50px;
+}
+
+.nav-item.active a {
+  border-bottom: 1px solid #f29b29;
+  color: #f29b29;
+}
+
+.nav-item a:hover {
+  border-bottom: 1px solid #f29b29;
+  color: #f29b29;
+}
+
+.nav-link {
+  padding: 0;
+  margin: 0 15px;
+}
+
+.post-detail-article {
+  padding-left: 20px;
+}
+
+.display-b-i {
+  display: block !important;
+}
+
+.my-modal {
+  display: none;
+}
+
+.blog-img {
+  width: 400px;
+}
+
+body {
+  padding: 20px;
+}
+
+#feedContainer {
+  margin-top: 20px;
 }

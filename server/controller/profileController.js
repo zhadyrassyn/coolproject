@@ -6,7 +6,9 @@ var Post = require('./../db/model/post');
 var path = require('path');
 var uploadDir = path.join(__dirname, "../uploads");
 
+
 var upload = multer({ dest: uploadDir});
+
 
 /* GET ALL POSTS */
 router.get('/api/profile/:id/posts', function(req, res) {
@@ -67,7 +69,7 @@ router.delete('/api/profile/:userId/posts/:postId', function(req, res) {
 
   Post.findByIdAndRemove(postId)
     .then(function(deletedPost) {
-      res.send({post: deletedPost});
+      res.send(deletedPost);
     })
     .catch(function(error) {
       res.send(error).status(400);

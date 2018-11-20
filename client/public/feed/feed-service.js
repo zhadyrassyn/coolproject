@@ -10,7 +10,7 @@ angular.module('feedModule').factory('feedService', ($http) => {
       return $http.post(this.url + '/' + id, data)
     },
 
-    cretePost: function(data) {
+    createPost: function(data) {
       return $http.put(this.url, data, {
         headers: {
           "content-type": undefined

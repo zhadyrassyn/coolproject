@@ -1,0 +1,65 @@
+<section id="profileComponent">
+  <button data-ng-click="showAddModal()" id="profileAddBtn" data-toggle="modal" data-target="#exampleModal" type="button" class="btn btn-success">
+    +
+  </button>
+  <ul class="list-group">
+    <li ng-repeat="post in posts" class="list-group-item">
+
+      <figure>
+        <img data-ng-src="{{post.image}}" class="blog-img">
+      </figure>
+
+      {{post.title}} , {{post.date | date: 'yyyy-MM-dd HH:mm'}}, {{post.content}}
+
+      <div>
+        <button data-ng-click="deletePost(post)" type="button" class="btn btn-danger">
+          Delete
+        </button>
+        <button data-ng-click="showEditModal(post)" type="button" class="btn btn-warning">
+          Edit
+        </button>
+        <button ui-sref="postDetail({ postID: post._id })" type="button" class="btn btn-info">Подробнее</button>
+      </div>
+
+    </li>
+  </ul>
+</section>
+
+<!-- Add modal -->
+<div data-ng-if="showAddModalFlag == true" class="my-modal display-b-i">
+  <div class="my-modal-content">
+    <span class="close" data-ng-click="removeAddModal()">&times;</span>
+    <div class="my-modal-header">
+      Добавление нового поста
+    </div>
+    <div class="my-modal-body">
+      <input type="text" placeholder="Название поста" data-ng-model="postTitle">
+      <textarea placeholder="Содержание поста" data-ng-model="postContent">
+      </textarea>
+      <input type="file" ng-file-model="imageFile">
+    </div>
+    <div class="my-modal-footer">
+      <button data-ng-click="savePost(postTitle, postContent, imageFile)">Сохранить</button>
+      <button data-ng-click="removeAddModal()">Отмена</button>
+    </div>
+  </div>
+</div>
+
+<!-- Edit modal -->
+<div data-ng-class="{'display-b-i': showEditModalFlag === true }" class="my-modal">
+  <div class="my-modal-content">
+    <span class="close" data-ng-click="removeEditModal()">&times;</span>
+    <div class="my-modal-header">
+      Рекдактирование поста {{post.title}}
+    </div>
+    <div class="my-modal-body">
+      <input type="text" placeholder="Название поста" data-ng-model="editTitle">
+      <textarea placeholder="Содержание поста" data-ng-model="editContent">
+      </textarea>
+    </div>
+    <div class="my-modal-footer">
+      <button data-ng-click="updatePost(editTitle, editContent, editPostId)">Редактировать</button>
+      <button data-ng-click="removeEditModal()">Отмена</button>
+    </div>
+  </div>
+</div>
