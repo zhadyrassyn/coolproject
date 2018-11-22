@@ -22,6 +22,14 @@ angular.module('profileModule').factory('profileService', ($http) => {
 
     deletePost: function(userId, postId) {
       return $http.delete(`${this.url}/${userId}/posts/${postId}`);
+    },
+
+    saveAvatar: function(userId, data) {
+      return $http.post(`${this.url}/${userId}/avatar`, data, {
+        headers: {
+          "content-type": undefined
+        }
+      });
     }
   }
 });

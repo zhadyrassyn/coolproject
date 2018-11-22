@@ -2,7 +2,12 @@
   <button data-ng-click="showAddModal()" id="profileAddBtn" data-toggle="modal" data-target="#exampleModal" type="button" class="btn btn-success">
     +
   </button>
-  <img src="{{avatarPath}}" alt="Ava" class="avatar-img">
+  <div class="avatar-wrapper">
+    <img src="{{avatarPath}}" alt="Ava" id="avatar-img" class="avatar-img" >
+  </div>
+  <input type="file" ng-file-model="avatarFile" class="avatar-input" id="avatar-input">
+  <button type="button" data-ng-click="saveAvatar(avatarFile)">Save Avatar</button>
+
   <ul class="list-group">
     <li ng-repeat="post in posts" class="list-group-item">
 

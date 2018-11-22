@@ -2,7 +2,7 @@ angular
   .module('profileModule')
   .component('profileComponent', {
 
-    controller: function($scope, $cookies, profileService) {
+    controller: function($scope, $cookies, profileService, $timeout) {
 
       $scope.showAddModalFlag = false;
 
@@ -15,8 +15,6 @@ angular
       } else {
         $scope.avatarPath = "/avas/default.png";
       }
-
-      console.log('$scope.avatarPath ', $scope.avatarPath);
 
       profileService.getPosts(user._id).then(response => {
           if (response.status === 200) {
@@ -91,6 +89,25 @@ angular
           .error(err => console.log('error ', err));
 
         $scope.removeEditModal();
+      }
+
+      $scope.saveAvatar = function(img) {
+
+        if (img !== null) {
+          var formData = new FormData();
+          formData.append('img', img);
+          profileService.saveAvatar(user._id, formData)
+            .then(function(response) {
+              if (response.status === 200) {
+
+                var random = (new Date()).toString();
+                $scope.avatarPath = response.data.avatarPath + "?cb=" + random;
+
+              }
+            }).catch(function(error) {
+             console.log('error ', error);
+            })
+        }
       }
 
     },

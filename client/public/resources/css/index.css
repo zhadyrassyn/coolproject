@@ -159,3 +159,12 @@ body {
 #feedContainer {
   margin-top: 20px;
 }
+
+.avatar-img {
+  border-radius: 50%;
+  width: 100%;
+}
+
+.avatar-wrapper {
+  width: 200px;
+}
