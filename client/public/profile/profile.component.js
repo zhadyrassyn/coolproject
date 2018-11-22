@@ -8,9 +8,17 @@ angular
 
       $scope.posts = [];
       var user = $cookies.getObject("user");
+      console.log('user ', user);
 
-      profileService.getPosts(user._id)
-        .then(response => {
+      if (user.avatarPath) {
+        $scope.avatarPath = user.avatarPath;
+      } else {
+        $scope.avatarPath = "/avas/default.png";
+      }
+
+      console.log('$scope.avatarPath ', $scope.avatarPath);
+
+      profileService.getPosts(user._id).then(response => {
           if (response.status === 200) {
             $scope.posts = response.data.posts;
           }

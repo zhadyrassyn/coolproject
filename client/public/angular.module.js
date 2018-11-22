@@ -4,6 +4,8 @@ var app = angular.module('app', ['ngCookies', 'ui.router', 'feedModule',
 app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
   $locationProvider.html5Mode(true);
 
+  $urlRouterProvider.otherwise('/');
+
   var states = [
     {
       name: 'index',
@@ -27,7 +29,6 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
     }
   ];
 
-  $urlRouterProvider.otherwise('/');
 
   states.forEach(state => $stateProvider.state(state));
 });

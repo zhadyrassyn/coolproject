@@ -13,7 +13,8 @@ var passport = require('./service/auth');
 
 
 /* Указываем папку статических файлов */
-app.use(express.static(path.join(__dirname, "../client/public")))
+app.use(express.static(path.join(__dirname, "../client/public")));
+app.use(express.static(path.join(__dirname, "uploads")));
 
 app.use(bodyParser.json());
 
@@ -33,7 +34,8 @@ app.use('/', authController);
 app.use('/', profileController);
 /*Отображаем index.html файл при запросе GET /* */
 app.get('*', function(req, res) {
-  res.sendFile(path.join(__dirname, "../client/public/index.html"));
+  // res.sendFile(path.join(__dirname, "../client/public/index.html"));
+  res.redirect('/');
 });
 
 var port = 3000;
