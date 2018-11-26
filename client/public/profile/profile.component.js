@@ -102,7 +102,7 @@ angular
 
                 var random = (new Date()).toString();
                 $scope.avatarPath = response.data.avatarPath + "?cb=" + random;
-
+                // /avas/asdjfklhg.png?sdf=asdfadfsdfjk
               }
             }).catch(function(error) {
              console.log('error ', error);

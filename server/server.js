@@ -9,9 +9,14 @@ var app = express();
 var postRouter = require('./controller/postController');
 var authController = require('./controller/authController');
 var profileController = require('./controller/profileController');
+var commentController = require('./controller/commentController');
+const fallback = require('express-history-api-fallback');
+
+const webpackHistoryApiFallback = require('express-history-api-fallback-middleware');
+
 var passport = require('./service/auth');
 
-
+var root = path.join(__dirname, "../client/public");
 /* Указываем папку статических файлов */
 app.use(express.static(path.join(__dirname, "../client/public")));
 app.use(express.static(path.join(__dirname, "uploads")));
@@ -32,11 +37,25 @@ app.use(passport.session());
 app.use('/', postRouter);
 app.use('/', authController);
 app.use('/', profileController);
+app.use('/', commentController);
 /*Отображаем index.html файл при запросе GET /* */
-app.get('*', function(req, res) {
-  // res.sendFile(path.join(__dirname, "../client/public/index.html"));
-  res.redirect('/');
-});
+app.use(webpackHistoryApiFallback());
+// app.use(fallback('index.html', { root }))
+
+// app.get('*', function(req, res) {
+//   // res.sendFile(path.join(__dirname, "../client/public/index.html"));
+//   console.log('original url ', req.originalUrl);
+//
+//   if(req.originalUrl != '/favicon.ico') {
+//     let url = req.originalUrl.replace('%2F', '/');
+//     // res.redirect('/#' + url);
+//   }
+//
+//   if (req.originalUrl.startsWith('/')) {
+//     console.log('here');
+//     res.redirect('/#/' + req.originalUrl.substring(1));
+//   }
+// });
 
 var port = 3000;
 app.listen(port, function() {

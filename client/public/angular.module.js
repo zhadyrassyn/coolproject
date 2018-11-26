@@ -1,9 +1,8 @@
 var app = angular.module('app', ['ngCookies', 'ui.router', 'feedModule',
   'postDetailModule', 'navigationModule', 'loginModule', 'profileModule']);
 
-app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
+app.config(function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
   $locationProvider.html5Mode(true);
-
   $urlRouterProvider.otherwise('/');
 
   var states = [
