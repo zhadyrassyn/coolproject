@@ -36,7 +36,6 @@ router.post('/api/posts/:postId/comments', async function(req, res) {
     res.status(500).send(error);
   }
 
-
 });
 
 
