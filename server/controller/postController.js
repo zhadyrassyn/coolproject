@@ -26,15 +26,16 @@ router.get('/api/posts', function(req, res) {
 //ID: 5bb77bcd2919b41e80b0f4eb
 router.get('/api/posts/:id', function(req, res) {
   var idParam = req.params.id;
-  Post.findById(idParam).then(function(post) {
-    console.log('success ', post);
+
+  Post.findById(idParam).populate({path: 'comments', populate: {path: 'author'}}).then(function(post) {
     res.send({
       post: post
     })
   }).catch(function(error) {
     console.log('error ', error);
     res.send(error);
-  })
+  });
+
 });
 
 module.exports = router;

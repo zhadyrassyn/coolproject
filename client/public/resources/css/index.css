@@ -168,3 +168,49 @@ body {
 .avatar-wrapper {
   width: 200px;
 }
+
+.comment-item-container {
+  display: flex;
+}
+
+.comment-avatar {
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+}
+
+.comment-item-details {
+  padding-left: 20px;
+  position: relative;
+  width: 100%;
+}
+
+.comment-item-delete-btn {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+.comment-container {
+  margin-top: 20px;
+  padding-top: 10px;
+}
+
+.leave-comment-container {
+  margin-top: 10px;
+}
+
+.leave-comment-container button {
+  display: block;
+  margin-top: 10px;
+}
+
+.leave-comment-container textarea {
+  width: 600px;
+  height: 100px;
+  padding: 8px;
+}
+
+.comment-item-delete-btn:hover {
+  cursor: pointer;
+}

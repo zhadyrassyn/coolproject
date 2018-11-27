@@ -42,20 +42,21 @@ angular
         formData.append('file', image);
 
         profileService.createPost(user._id, formData)
-          .success(post => {
+          .then(response => {
             $scope.removeAddModal();
-            $scope.posts.push(post);
+            $scope.posts.push(response.data);
           })
-          .error(err => console.log('error ', err));
+          .catch(err => console.log('error ', err));
       };
 
       $scope.deletePost = (post) => {
 
         profileService.deletePost(user._id, post._id)
-          .success(post => {
+          .then(response => {
+            var post = response.data;
             $scope.posts = $scope.posts.filter(it => it._id !== post._id);
           })
-          .error(err => {
+          .catch(err => {
             console.log('error ', err);
           })
       };
@@ -79,14 +80,14 @@ angular
         };
 
         profileService.updatePost(user._id, postId, post)
-          .success(response => {
-            var updatedPost = response.post;
+          .then(response => {
+            var updatedPost = response.data;
             const index = $scope.posts.findIndex(it => it._id === postId);
             if(index !== -1) {
               $scope.posts.splice(index, 1, updatedPost);
             }
           })
-          .error(err => console.log('error ', err));
+          .catch(err => console.log('error ', err));
 
         $scope.removeEditModal();
       }

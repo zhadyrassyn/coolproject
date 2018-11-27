@@ -5,4 +5,28 @@
     <p>{{post.date}}</p>
     <img data-ng-src="{{post.image}}" alt="Картинка поста"
          data-ng-if="post.image">
+
+    <section class="comment-container">
+        <h3>Комментарии</h3>
+        <ul class="list-group">
+            <li ng-repeat="comment in post.comments" class="list-group-item">
+                <div class="comment-item-container">
+                    <img data-ng-if="comment.author.avatarPath" src="{{comment.author.avatarPath}}" class="comment-avatar">
+                    <img data-ng-if="!comment.author.avatarPath" src="/avas/default.png" class="comment-avatar">
+
+                    <div class="comment-item-details">
+                        <p>{{comment.createDate | date: 'yyyy-MM-dd HH:mm'}}</p>
+                        <p>{{comment.text}}</p>
+                        <span class="comment-item-delete-btn" data-ng-click="deleteComment(comment)"
+                              data-ng-if="comment.author._id == user._id">X</span>
+                    </div>
+                </div>
+            </li>
+        </ul>
+
+        <div class="leave-comment-container" ng-hide="!$root.authenticated">
+            <textarea placeholder="Leave comment" ng-model="commentText"></textarea>
+            <button type="button" class="btn btn-primary" data-ng-click="saveComment(commentText)">Leave comment</button>
+        </div>
+    </section>
 </article>

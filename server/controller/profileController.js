@@ -91,7 +91,7 @@ router.post('/api/profile/:userId/posts/:postId', function(req, res) {
   }}, {new: true})
     .then(function(updatedPost) {
       // console.log('success ', success);
-      res.send({post: updatedPost});
+      res.send(updatedPost);
     })
     .catch(function(error) {
       console.log('error ', error);
