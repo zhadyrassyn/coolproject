@@ -51,7 +51,7 @@ router.delete('/api/posts/:postId/comments/:commentId', async function(req, res)
 
     if (deletedComment) {
       var post = await Post.findById(postId);
-      post.comments = post.comments.filter(comment => comment._id != deletedComment._id);
+      post.comments = post.comments.filter(comment => !comment._id.equals(deletedComment._id));
       await post.save();
     }
 
