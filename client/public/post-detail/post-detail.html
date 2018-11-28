@@ -6,6 +6,13 @@
     <img data-ng-src="{{post.image}}" alt="Картинка поста"
          data-ng-if="post.image">
 
+    <div class="likes-container">
+        <i class="fas fa-heart red like-icon" ng-show="liked == true" data-ng-click="deleteLike()"></i>
+        <i class="far fa-heart like-icon" ng-show="liked == false" data-ng-click="addLike()"></i>
+        {{likes}}
+    </div>
+
+
     <section class="comment-container">
         <h3>Комментарии</h3>
         <ul class="list-group">

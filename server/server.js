@@ -10,6 +10,7 @@ var postRouter = require('./controller/postController');
 var authController = require('./controller/authController');
 var profileController = require('./controller/profileController');
 var commentController = require('./controller/commentController');
+var likeController = require('./controller/likeController');
 
 var passport = require('./service/auth');
 
@@ -35,10 +36,12 @@ app.use('/', postRouter);
 app.use('/', authController);
 app.use('/', profileController);
 app.use('/', commentController);
+app.use('/', likeController);
 /*Отображаем index.html файл при запросе GET /* */
 
 app.get('*', function(req, res) {
-  res.redirect('/');
+  // req.originalUrl; '/login'
+  res.redirect('/#' + req.originalUrl);
 });
 
 var port = 3000;

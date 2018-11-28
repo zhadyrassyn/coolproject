@@ -5,7 +5,7 @@ angular
       $scope.school = "Decode";
       $scope.post = {};
       $scope.commentText = "";
-
+      $scope.liked = false;
 
       var id = $state.params.postID;
       var url = '/api/posts/' + id;
@@ -16,6 +16,8 @@ angular
         .then(function(response) {
           if (response.status === 200) {
             $scope.post = response.data.post;
+            $scope.likes = response.data.likes;
+            $scope.liked = response.data.liked;
           }
         })
         .catch(function(error) {
@@ -54,6 +56,39 @@ angular
         $http.delete(url).then(function(response) {
           if (response.status == 200) {
             $scope.post.comments = $scope.post.comments.filter(comment => comment._id != deleteComment._id);
+          }
+        }).catch(function(error) {
+          console.log('error ', error);
+        })
+      }
+
+      $scope.deleteLike = function() {
+        if (!$cookies.getObject('user')) {
+          return;
+        }
+
+        var url = '/api/posts/' + id + '/likes';
+
+        $http.delete(url).then(function(response) {
+          if (response.status === 204) {
+            $scope.liked = false;
+            $scope.likes = $scope.likes - 1;
+          }
+        }).catch(function(error) {
+          console.log('error ', error);
+        })
+      }
+
+      $scope.addLike = function() {
+        if (!$cookies.getObject('user')) {
+          return;
+        }
+        var url = '/api/posts/' + id + '/likes';
+
+        $http.post(url).then(function(response) {
+          if (response.status === 201) {
+            $scope.liked = true;
+            $scope.likes = $scope.likes + 1;
           }
         }).catch(function(error) {
           console.log('error ', error);

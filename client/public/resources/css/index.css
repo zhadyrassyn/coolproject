@@ -214,3 +214,11 @@ body {
 .comment-item-delete-btn:hover {
   cursor: pointer;
 }
+
+.red {
+  color: red;
+}
+
+.like-icon:hover {
+  cursor: pointer;
+}
