@@ -40,8 +40,13 @@ app.use('/', likeController);
 /*Отображаем index.html файл при запросе GET /* */
 
 app.get('*', function(req, res) {
-  // req.originalUrl; '/login'
-  res.redirect('/#' + req.originalUrl);
+  var currentUrl = req.originalUrl;
+
+  if (currentUrl.endsWith('/')) {
+    currentUrl = currentUrl.substring(0, currentUrl.length-1);
+  }
+
+  res.redirect('/#!' + currentUrl);
 });
 
 var port = 3000;
