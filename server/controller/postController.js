@@ -10,19 +10,43 @@ var uploadDir = path.join(__dirname, "../uploads");
 var upload = multer({ dest: uploadDir});
 var Like = require('./../db/model/like');
 
+
+async function generate() {
+  for(var i = 1; i <= 20; i++) {
+    var post = new Post({
+      title: 'Title: ' + i,
+      content: 'Content: ' + i
+    });
+
+    await post.save();
+  }
+}
+
+generate();
+
 /* GET ALL POSTS */
-router.get('/api/posts', function(req, res) {
-  Post.find()
-    .populate('author', ['firstName', 'lastName'])
-    .then(function(posts) {
+router.get('/api/posts', async function(req, res) {
+  var perPage = parseInt(req.query.perPage);
+  var currentPage = parseInt(req.query.currentPage);
+
+  try {
+    var posts = await Post.find()
+      .skip((currentPage -1) * perPage)
+      .limit(perPage)
+      .populate('author', ['firstName', 'lastName']);
+
+    var total = await Post.count();
 
     res.send({
+      total: total,
       posts: posts
     });
-  }).catch(function(error) {
-    console.log('error ', error);
-    res.sendStatus(400);
-  });
+
+  } catch(error) {
+      console.log('error ', error);
+      res.sendStatus(400);
+  }
+
 });
 
 //ID: 5bb77bcd2919b41e80b0f4eb
