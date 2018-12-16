@@ -12,7 +12,7 @@ var Like = require('./../db/model/like');
 
 
 async function generate() {
-  for(var i = 1; i <= 20; i++) {
+  for(var i = 1; i < 20; i++) {
     var post = new Post({
       title: 'Title: ' + i,
       content: 'Content: ' + i
@@ -22,31 +22,28 @@ async function generate() {
   }
 }
 
-generate();
+// generate();
 
 /* GET ALL POSTS */
 router.get('/api/posts', async function(req, res) {
-  var perPage = parseInt(req.query.perPage);
-  var currentPage = parseInt(req.query.currentPage);
+  var perPage = parseInt(req.query.perPage); //сколько элементов на странице
+  var currentPage = parseInt(req.query.currentPage); //на какой странице мы находимся
 
   try {
     var posts = await Post.find()
-      .skip((currentPage -1) * perPage)
-      .limit(perPage)
-      .populate('author', ['firstName', 'lastName']);
-
-    var total = await Post.count();
+      .skip((currentPage -1) * perPage) //пропустить
+      .limit(perPage) //
+      .populate('author', ['firstName', 'lastName'])
+    var total = await Post.count(); // сколько всего постов в базе
 
     res.send({
       total: total,
-      posts: posts
-    });
-
-  } catch(error) {
-      console.log('error ', error);
-      res.sendStatus(400);
+      posts: posts       //отправка данных на фронт response
+    })
+  } catch (error) {
+    console.log('error ', error);
+    res.sendStatus(400);
   }
-
 });
 
 //ID: 5bb77bcd2919b41e80b0f4eb

@@ -2,8 +2,8 @@ angular.module('feedModule').factory('feedService', ($http) => {
   return {
     url: '/api/posts',
 
-    getPosts: function() {
-      return $http.get(this.url);
+    getPosts: function(currentPage, perPage) {
+      return $http.get(this.url + '?perPage=' + perPage + '&currentPage=' + currentPage);
     },
 
     updatePost: function(id, data) {
