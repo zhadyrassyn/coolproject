@@ -18,6 +18,11 @@ angular
           console.log('error ', error);
         })
       }
+
+      $scope.search = function(searchText) {
+        console.log('searchText ', searchText);
+        $rootScope.$broadcast('searchText', searchText);
+      }
     },
     templateUrl: '/navigation/navigation.html'
   });

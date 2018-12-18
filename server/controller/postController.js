@@ -25,24 +25,56 @@ async function generate() {
 // generate();
 
 /* GET ALL POSTS */
-router.get('/api/posts', async function(req, res) {
+router.get('/api/posts', function(req, res) {
   var perPage = parseInt(req.query.perPage); //сколько элементов на странице
   var currentPage = parseInt(req.query.currentPage); //на какой странице мы находимся
+  var searchText = req.query.searchText;
 
-  try {
-    var posts = await Post.find()
+  if (searchText !== null && searchText !== undefined && searchText.length !== 0) {
+    const myRegExp = new RegExp(`${searchText}`, 'gi');
+
+    var posts = Post.find({
+      $or: [
+        {title: myRegExp},
+        {content: myRegExp}
+      ]
+    }).skip((currentPage -1) * perPage) //пропустить
+      .limit(perPage) //
+      .populate('author', ['firstName', 'lastName']);
+
+    var counts = Post.count({
+      $or: [
+        {title: myRegExp},
+        {content: myRegExp}
+      ]
+    });
+
+    Promise.all([posts, counts]).then(values => {
+      res.send({
+        posts: values[0],
+        total: values[1]
+      });
+    }).catch(error => {
+      res.status(500).send(error);
+    })
+
+  } else {
+
+    var posts = Post.find()
       .skip((currentPage -1) * perPage) //пропустить
       .limit(perPage) //
-      .populate('author', ['firstName', 'lastName'])
-    var total = await Post.count(); // сколько всего постов в базе
+      .populate('author', ['firstName', 'lastName']);
 
-    res.send({
-      total: total,
-      posts: posts       //отправка данных на фронт response
+    var counts = Post.count();
+
+    Promise.all([posts, counts]).then(values => {
+      res.send({
+        posts: values[0],
+        total: values[1]
+      });
+    }).catch(error => {
+      res.status(500).send(error);
     })
-  } catch (error) {
-    console.log('error ', error);
-    res.sendStatus(400);
   }
 });
 
