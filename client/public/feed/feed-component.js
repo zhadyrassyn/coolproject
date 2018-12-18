@@ -3,18 +3,22 @@ angular
   .component('feedComponent', {
     controller: function($scope, feedService) {
       $scope.posts = [];
-      var currentPage = 1;
+      var currentPage = 0;
+      var totalPages = 1;
       var perPage = 5;
+      $scope.busy = false;
 
       $scope.pages = [];
 
       function fill(currentPage, perPage) {
+        $scope.busy = true;
+
         feedService.getPosts(currentPage, perPage)
           .then(function(success) {
-            $scope.posts = success.data.posts;
+            $scope.posts = $scope.posts.concat(success.data.posts);
             $scope.total = success.data.total;
 
-            var totalPages = parseInt(Math.ceil($scope.total / perPage));
+            totalPages = parseInt(Math.ceil($scope.total / perPage));
 
             for (var i = 1; i <= totalPages; i++) {
               if (currentPage == i) {
@@ -29,12 +33,14 @@ angular
                 });
               }
             }
+            $scope.busy = false;
           }).catch(function(error) {
           console.log('error ', error);
+          $scope.busy = false;
         });
       }
 
-      fill(currentPage, perPage);
+      // fill(currentPage, perPage);
 
       // IT IS FOR PAGINATION
       // $scope.changePage = function(page) {
@@ -45,7 +51,10 @@ angular
       // }
 
       $scope.myPagingFunction = function() {
-        console.log('on scroll');
+        currentPage += 1;
+        if (currentPage <= totalPages) {
+          fill(currentPage, perPage);
+        }
       }
     },
     templateUrl: '/feed/feed.html'
