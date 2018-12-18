@@ -1,15 +1,15 @@
 angular
   .module('feedModule')
   .component('feedComponent', {
-    controller: function($scope, feedService) {
+    controller: function($scope, feedService, $rootScope) {
       $scope.posts = [];
       var currentPage = 1;
       var perPage = 5;
 
       $scope.pages = [];
 
-      function fill(currentPage, perPage) {
-        feedService.getPosts(currentPage, perPage)
+      function fill(currentPage, perPage, searchText) {
+        feedService.getPosts(currentPage, perPage, searchText)
           .then(function(success) {
             $scope.posts = success.data.posts;
             $scope.total = success.data.total;
@@ -40,8 +40,16 @@ angular
         currentPage = page;
         $scope.posts = [];
         $scope.pages = [];
-        fill(currentPage, perPage);
-      }
+        fill(currentPage, perPage, $scope.searchText);
+      };
+
+      $rootScope.$on('searchText', function (event, data) {
+        $scope.searchText = data;
+        currentPage = 1;
+        $scope.posts = [];
+        $scope.pages = [];
+        fill(currentPage, perPage, data);
+      });
     },
     templateUrl: '/feed/feed.html'
   });

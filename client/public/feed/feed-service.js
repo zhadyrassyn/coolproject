@@ -2,7 +2,10 @@ angular.module('feedModule').factory('feedService', ($http) => {
   return {
     url: '/api/posts',
 
-    getPosts: function(currentPage, perPage) {
+    getPosts: function(currentPage, perPage, searchText) {
+      if (searchText != null) {
+        return $http.get(this.url + '?perPage=' + perPage + '&currentPage=' + currentPage + '&searchText=' + searchText);
+      }
       return $http.get(this.url + '?perPage=' + perPage + '&currentPage=' + currentPage);
     },
 

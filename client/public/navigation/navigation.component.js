@@ -20,7 +20,6 @@ angular
       }
 
       $scope.search = function(searchText) {
-        console.log('searchText ', searchText);
         $rootScope.$broadcast('searchText', searchText);
       }
     },
