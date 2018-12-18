@@ -3,18 +3,21 @@ angular
   .component('feedComponent', {
     controller: function($scope, feedService) {
       $scope.posts = [];
-      var currentPage = 1;
+      var currentPage = 0;
       var perPage = 5;
+      $scope.isLoading = false;
+      var totalPages = 1;
 
       $scope.pages = [];
 
       function fill(currentPage, perPage) {
+        $scope.isLoading = true;
         feedService.getPosts(currentPage, perPage)
           .then(function(success) {
-            $scope.posts = success.data.posts;
+            $scope.posts = $scope.posts.concat(success.data.posts);
             $scope.total = success.data.total;
 
-            var totalPages = parseInt(Math.ceil($scope.total / perPage));
+            totalPages = parseInt(Math.ceil($scope.total / perPage));
 
             for (var i = 1; i <= totalPages; i++) {
               if (currentPage == i) {
@@ -29,18 +32,27 @@ angular
                 });
               }
             }
+            $scope.isLoading = false;
           }).catch(function(error) {
           console.log('error ', error);
+          $scope.isLoading = false;
         });
       }
-
-      fill(currentPage, perPage);
 
       $scope.changePage = function(page) {
         currentPage = page;
         $scope.posts = [];
         $scope.pages = [];
         fill(currentPage, perPage);
+      };
+
+      $scope.myPagingFunction = function() {
+        currentPage += 1;
+        if(currentPage <= totalPages) {
+          fill(currentPage, perPage);
+        } else {
+          $scope.isLoading = false;
+        }
       }
     },
     templateUrl: '/feed/feed.html'

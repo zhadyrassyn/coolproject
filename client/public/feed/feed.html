@@ -1,4 +1,4 @@
-<section id="feedContainer">
+<section id="feedContainer" infinite-scroll="myPagingFunction()" infinite-scroll-disabled="isLoading">
   <ul class="list-group">
     <li data-ng-repeat="x in posts" class="list-group-item">
       <p>{{x.title}}</p>
@@ -10,9 +10,9 @@
     </li>
   </ul>
 
-  <ul class="list-unstyled pagination mt-3">
-    <li data-ng-repeat="page in pages" data-ng-class="{'active page-item': page.active}">
-      <button class="page-link active" data-ng-click="changePage(page.name)">{{page.name}}</button>
-    </li>
-  </ul>
+  <!--<ul class="list-unstyled pagination mt-3">-->
+    <!--<li data-ng-repeat="page in pages" data-ng-class="{'active page-item': page.active}">-->
+      <!--<button class="page-link active" data-ng-click="changePage(page.name)">{{page.name}}</button>-->
+    <!--</li>-->
+  <!--</ul>-->
 </section>
