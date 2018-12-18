@@ -36,11 +36,16 @@ angular
 
       fill(currentPage, perPage);
 
-      $scope.changePage = function(page) {
-        currentPage = page;
-        $scope.posts = [];
-        $scope.pages = [];
-        fill(currentPage, perPage);
+      // IT IS FOR PAGINATION
+      // $scope.changePage = function(page) {
+      //   currentPage = page;
+      //   $scope.posts = [];
+      //   $scope.pages = [];
+      //   fill(currentPage, perPage);
+      // }
+
+      $scope.myPagingFunction = function() {
+        console.log('on scroll');
       }
     },
     templateUrl: '/feed/feed.html'

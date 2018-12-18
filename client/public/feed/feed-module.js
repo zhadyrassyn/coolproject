@@ -1,1 +1,1 @@
-angular.module('feedModule', []);
+angular.module('feedModule', ['infinite-scroll']);
