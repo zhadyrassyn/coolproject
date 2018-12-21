@@ -25,25 +25,50 @@ async function generate() {
 // generate();
 
 /* GET ALL POSTS */
-router.get('/api/posts', async function(req, res) {
+router.get('/api/posts', function(req, res) {
   var perPage = parseInt(req.query.perPage); //сколько элементов на странице
   var currentPage = parseInt(req.query.currentPage); //на какой странице мы находимся
+  var searchText = req.query.searchText;
+  var posts;
+  var total;
 
-  try {
-    var posts = await Post.find()
+  if (searchText == null || searchText.length == 0) {
+    posts = Post.find()
       .skip((currentPage -1) * perPage) //пропустить
       .limit(perPage) //
       .populate('author', ['firstName', 'lastName'])
-    var total = await Post.count(); // сколько всего постов в базе
+    total = Post.count(); // сколько всего постов в базе
+  } else {
+    var regex = new RegExp(searchText, 'gi');
 
-    res.send({
-      total: total,
-      posts: posts       //отправка данных на фронт response
+    posts = Post.find({
+      $or: [
+        {title: regex},
+        // {firstName: regex},
+        // {lastName: regex}
+      ]
     })
-  } catch (error) {
-    console.log('error ', error);
-    res.sendStatus(400);
+      .skip((currentPage -1) * perPage) //пропустить
+      .limit(perPage) //
+      .populate('author', ['firstName', 'lastName'])
+
+    total = Post.count({
+      $or: [
+        {title: regex}
+      ]
+    }); // сколько всего постов в базе
+
   }
+
+  Promise.all([posts, total]).then(function(values) {
+    res.send({
+      posts: values[0],
+      total: values[1]
+    });
+  }).catch(function(error) {
+    console.log(error);
+    res.status(500).send(error);
+  })
 });
 
 //ID: 5bb77bcd2919b41e80b0f4eb
