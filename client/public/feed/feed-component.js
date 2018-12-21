@@ -8,8 +8,8 @@ angular
 
       $scope.pages = [];
 
-      function fill(currentPage, perPage) {
-        feedService.getPosts(currentPage, perPage)
+      function fill(currentPage, perPage, searchText) {
+        feedService.getPosts(currentPage, perPage, searchText)
           .then(function(success) {
             $scope.posts = success.data.posts;
             $scope.total = success.data.total;
@@ -40,10 +40,22 @@ angular
         currentPage = page;
         $scope.posts = [];
         $scope.pages = [];
-        fill(currentPage, perPage);
+        fill(currentPage, perPage, $scope.searchText);
       };
 
-      $rootScope.$on('searchText')
+      $rootScope.$on('searchText', function(event, data) {
+        $scope.posts = [];
+        $scope.pages = [];
+        $scope.searchText = data;
+
+        if (data == null || data.length == 0) {
+          currentPage = 1;
+          fill(currentPage, perPage);
+        } else {
+          currentPage = 1;
+          fill(currentPage, perPage, data);
+        }
+      });
     },
     templateUrl: '/feed/feed.html'
   });
