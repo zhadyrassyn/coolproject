@@ -17,7 +17,11 @@ angular
         }).catch(function(error) {
           console.log('error ', error);
         })
-      }
+      };
+
+      $scope.search = function(searchText) {
+        $rootScope.$broadcast('searchText', searchText);
+      };
     },
     templateUrl: '/navigation/navigation.html'
   });

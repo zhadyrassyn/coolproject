@@ -1,7 +1,7 @@
 angular
   .module('feedModule')
   .component('feedComponent', {
-    controller: function($scope, feedService) {
+    controller: function($scope, feedService, $rootScope) {
       $scope.posts = [];
       var currentPage = 1;
       var perPage = 5;
@@ -41,7 +41,9 @@ angular
         $scope.posts = [];
         $scope.pages = [];
         fill(currentPage, perPage);
-      }
+      };
+
+      $rootScope.$on('searchText')
     },
     templateUrl: '/feed/feed.html'
   });

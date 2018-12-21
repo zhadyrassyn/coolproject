@@ -44,6 +44,7 @@ router.get('/api/posts', function(req, res) {
     posts = Post.find({
       $or: [
         {title: regex},
+        {content: regex}
         // {firstName: regex},
         // {lastName: regex}
       ]
