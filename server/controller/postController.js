@@ -9,6 +9,7 @@ var uploadDir = path.join(__dirname, "../uploads");
 
 var upload = multer({ dest: uploadDir});
 var Like = require('./../db/model/like');
+var mongoose = require('./../db/mongoose.connect').mongooseConnection;
 
 
 async function generate() {
@@ -40,31 +41,99 @@ router.get('/api/posts', function(req, res) {
     total = Post.count(); // сколько всего постов в базе
   } else {
     var regex = new RegExp(searchText, 'gi');
+    //
+    // posts = Post.find({
+    //   $or: [
+    //     {title: regex},
+    //     {content: regex}
+    //     // {firstName: regex},
+    //     // {lastName: regex}
+    //   ]
+    // })
+    //   .skip((currentPage -1) * perPage) //пропустить
+    //   .limit(perPage) //
+    //   .populate('author', ['firstName', 'lastName'])
 
-    posts = Post.find({
-      $or: [
-        {title: regex},
-        {content: regex}
-        // {firstName: regex},
-        // {lastName: regex}
-      ]
-    })
-      .skip((currentPage -1) * perPage) //пропустить
-      .limit(perPage) //
-      .populate('author', ['firstName', 'lastName'])
+    posts = Post.aggregate([
+      {
+        $lookup: {
+          "from": "users",
+          "localField": "author",
+          foreignField: "_id",
+          "as": "author",
+        },
+      },
+      {
+        $project: {
+          title: 1,
+          content: 1,
+          date: 1,
+          image: 1,
+          author: {
+            $arrayElemAt: [ '$author', 0 ]
+          }
+        }
+      },
+      {
+        $match: {
+          $or: [
+            {['author.firstName']: regex},
+            {['author.lastName']: regex},
+            {'title': regex}
+          ]
+        },
+      },
+      {
+        $skip: (currentPage -1) * perPage,
+      },
+      {
+        $limit: perPage
+      }
+    ]);
 
-    total = Post.count({
-      $or: [
-        {title: regex}
-      ]
-    }); // сколько всего постов в базе
+    // total = Post.count({
+    //   $or: [
+    //     {title: regex}
+    //   ]
+    // }); // сколько всего постов в базе
+
+    total = Post.aggregate([
+      {
+        $lookup: {
+          "from": "users",
+          "localField": "author",
+          foreignField: "_id",
+          "as": "author",
+        },
+      },
+      {
+        $project: {
+          author: {
+            $arrayElemAt: [ '$author', 0 ]
+          }
+        }
+      },
+      {
+        $match: {
+          $or: [
+            {['author.firstName']: regex},
+            {['author.lastName']: regex},
+            {'title': regex}
+          ]
+        },
+      },
+      {
+        $count: 'total'
+      }
+    ]);
 
   }
 
   Promise.all([posts, total]).then(function(values) {
+    console.log(values[1]);
     res.send({
       posts: values[0],
-      total: values[1]
+      total: (values[1][0] && values[1][0].total) || values[1]
     });
   }).catch(function(error) {
     console.log(error);
